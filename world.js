@@ -52,6 +52,12 @@
   .tally .bar i{display:block;height:100%}
   .tally b{color:var(--text)}
   .law .why{font-size:12.5px;line-height:1.65;padding:0 14px 12px;color:var(--text)}
+  .law .rvline{font-size:11.5px;color:#145C3A;background:#F1F8F4;border-top:1px solid var(--line);padding:5px 14px}
+  .rvbox{border:1px solid #BFE0CC;background:#F6FBF8;border-radius:6px;padding:12px 14px;margin-bottom:12px}
+  .rvbox .rvh{font-size:13px;font-weight:800;color:#145C3A;margin-bottom:8px}.rvbox .rvh span{font-weight:400;color:var(--muted);font-size:11.5px;margin-left:6px}
+  .rvbox .rvn{display:flex;flex-wrap:wrap;gap:8px 22px;margin-bottom:8px}.rvbox .rvn div{display:flex;flex-direction:column}
+  .rvbox .rvn b{font-size:18px;color:#0A2A5E}.rvbox .rvn span{font-size:11px;color:var(--muted)}
+  .rvbox p{font-size:12px;line-height:1.6;margin:0;color:var(--text)}
   .law .why span{font-size:11px;font-weight:800;color:var(--muted);margin-right:6px}
   .cases{border-top:1px solid var(--line);padding:6px 10px 10px}
   .lnotes{border-top:1px solid var(--line);padding:10px 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px 16px}
@@ -283,8 +289,9 @@
     (WD.roots || []).forEach(r => out.push({ law: 'L1', w: r.w, c: r.c, p: r.p, find: r.find, kind: '작동', t: `${r.family} ← ${r.root}`, note: [r.how, r.note].filter(Boolean).join('. '), conf: r.conf }));
     (WD.contacts || []).forEach(x => {
       if (x.kind === '접속') out.push({ law: 'L1', w: x.w, c: x.c, p: x.p, find: x.find, kind: '작동', t: x.who, note: x.note, conf: x.conf });
-      if (x.kind === '개입·보존' || x.l2) out.push({ law: 'L2', w: x.w, c: x.c, p: x.p, find: x.find, kind: '작동', t: x.who + (x.l2 ? ' · 운수로 설명' : ''), note: x.note, conf: x.conf, hl: x.l2 });
-      if (x.kind === '변경') out.push({ law: 'L2', w: x.w, c: x.c, p: x.p, find: x.find, kind: '예외', t: x.who, note: x.note, conf: x.conf });
+      // L2: 큰 줄기(즉위·붕어·계승)는 지키고 곁가지를 바꾼다. 운수 표시는 판정과 별개의 꼬리표.
+      if (x.kind === '개입·보존' || (x.kind === '보존' && x.l2)) out.push({ law: 'L2', w: x.w, c: x.c, p: x.p, find: x.find, kind: '작동', t: x.who + ' · 큰 줄기 보존' + (x.l2 ? ' · 운수로 설명' : ''), note: x.note, conf: x.conf, hl: x.l2 });
+      if (x.kind === '변경') out.push({ law: 'L2', w: x.w, c: x.c, p: x.p, find: x.find, kind: x.trunk ? '예외' : '작동', t: x.who + (x.trunk ? ' · 큰 줄기 변경' : ' · 곁가지 변경') + (x.l2 ? ' · 운수로 설명' : ''), note: x.note, conf: x.conf, hl: x.l2 });
     });
     (WD.villains || []).forEach(v => { const k = l3(v); if (k) out.push({ law: 'L3', w: v.w, c: v.c, p: v.p, find: v.find, kind: k, t: `${v.name} (${v.pos}) → ${v.end}`, note: `${v.crime}. ${v.note || ''}`, conf: v.conf, pair: v.crime_at ? Object.assign({ lab: '악행 대목' }, v.crime_at) : null }); });
     (WD.cases || []).forEach(c => out.push(Object.assign({}, c, { pair: c.pair ? Object.assign({ lab: c.law === 'L4' ? '실현 대목' : c.law === 'L5' ? '바로잡히는 대목' : '결과 대목' }, c.pair) : null })));
@@ -301,12 +308,23 @@
       const cs = C.filter(c => c.law === L.id);
       const tal = WD.works.map(w => { const a = cs.filter(c => c.w === w.id && c.kind === '작동').length, b = cs.filter(c => c.w === w.id && c.kind === '예외').length, mx = Math.max(1, ...WD.works.map(x => cs.filter(c => c.w === x.id).length)); return `<div class="row">${sym(w.id)} ${w.title} · 작동 <b>${a}</b> · 예외 <b>${b}</b><div class="bar"><i style="width:${a / mx * 100}%;background:${w.color}"></i><i style="width:${b / mx * 100}%;background:#E8A07A"></i></div></div>`; }).join('');
       const open = st2.open.has(L.id);
+      const RV = WD.review && WD.review.laws && WD.review.laws[L.id];
+      const rvLine = RV ? `<div class="rvline">표본 검수 ${RV[0] + RV[1] + RV[2]}건 · 일치 <b>${RV[0]}</b>${RV[1] ? ` · 수정 <b>${RV[1]}</b>` : ''}${RV[2] ? ` · 보류 <b>${RV[2]}</b>` : ''}${L.id === 'L2' ? ' · 검수 결과에 따라 법칙을 다시 정의함, 재검수 예정' : ''}</div>` : '';
       return `<div class="law" data-l="${L.id}"><div class="top" role="button" tabindex="0" aria-expanded="${open}"><span class="lid">${L.id}</span><div><div class="stmt">${esc(L.t)}</div><div class="desc">${esc(L.desc || '')}</div></div><span class="verd ${VCLS[L.verdict] || 'v3'}" title="Claude의 1차 판정">${esc(L.verdict || '')}</span></div>
+        ${rvLine}
         <div class="tally">${tal}</div>
         ${L.why ? `<div class="why"><span>작품 비교</span>${esc(L.why)}</div>` : ''}
         ${open && L.notes && Object.values(L.notes).some(Boolean) ? `<div class="lnotes"><div class="lnh">작품별로 보면</div>${WD.works.filter(w => L.notes[w.id]).map(w => `<div class="ln"><b>${sym(w.id)} ${w.title}</b><span>${esc(L.notes[w.id])}</span></div>`).join('')}</div>` : ''}
         ${open ? `<div class="cases">${caseList(L.id, cs)}</div>` : `<div class="why" style="padding-top:0"><button class="btn2" data-open="${L.id}">작품별 설명과 근거 ${cs.length}건 보기</button></div>`}</div>`;
-    }).join('') + `<div class="note">판정과 사례 분류는 Claude가 본문을 읽고 단 1차 결과입니다. L1·L2는 '역사 연표', L3은 '응보의 질서' 데이터에서 자동으로 모은 것입니다.</div>`;
+    }).join('') + `<div class="note">판정과 사례 분류는 Claude가 본문을 읽고 단 1차 결과이며, 아래의 표본 검수로 연구자가 확인했습니다. L1·L2는 '역사 연표', L3·L7·L8은 '응보의 질서' 데이터에서 자동으로 모은 것입니다.</div>`;
+    const R = WD.review;
+    if (R) {
+      const ok = R.result['일치'], fx = R.result['수정'], hd = R.result['보류'];
+      const pct = (ok / (ok + fx) * 100).toFixed(1);
+      el.insertAdjacentHTML('afterbegin', `<div class="rvbox"><div class="rvh">표본 검수 <span>${esc(R.date)}</span></div>
+        <div class="rvn"><div><b>${R.sample}</b><span>검수 표본 (검수 당시 근거 ${R.total}건의 ${(R.sample / R.total * 100).toFixed(0)}%)</span></div><div><b>${ok}</b><span>일치</span></div><div><b>${fx}</b><span>수정</span></div><div><b>${hd}</b><span>보류</span></div><div><b>${pct}%</b><span>일치율 (일치 ÷ 일치+수정)</span></div></div>
+        <p>${esc(R.note)}</p></div>`);
+    }
     const tog = id => { st2.open.has(id) ? st2.open.delete(id) : st2.open.add(id); drawLaws(el); };
     el.querySelectorAll('.law .top').forEach(t => { const id = t.parentElement.dataset.l; t.onclick = () => tog(id); t.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(id); } }; });
     el.querySelectorAll('[data-open]').forEach(b => b.onclick = () => tog(b.dataset.open));
