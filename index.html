@@ -122,6 +122,9 @@ body.wi-on section.reader{display:none}
 .wi-hero .k2{display:inline-block;font-size:12px;font-weight:800;color:var(--blue);background:var(--tint);border-radius:12px;padding:3px 10px;margin-bottom:12px}
 .wi-hero h2{font-size:30px;font-weight:800;color:var(--navy);margin:0 0 14px;letter-spacing:-.6px}
 .wi-hero p{font-size:15px;line-height:1.8;color:var(--muted);margin:0;word-break:keep-all}
+.wi-more{text-align:right;margin-top:26px;font-size:12px}
+.wi-more a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.wi-more a:hover{color:var(--blue)}
 .wi-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
 .wi-col{display:flex;flex-direction:column;gap:12px}
 .wi-gh{display:flex;align-items:baseline;gap:8px;padding:0 4px 8px;border-bottom:2px solid var(--gc);margin-bottom:2px}
@@ -460,7 +463,7 @@ refresh(() => { if (init.get('q')) { st.cat = init.get('cat') || 'X'; side(); do
     const SUB=['무엇이 있나','어떻게 돌아가나','함께 기대는 바탕 지식'];
     box.innerHTML=`<div class="wi-wrap"><div class="wi-hero"><span class="k2">시범 · 국문장편 6편</span><h2>국문장편의 공유 세계</h2>
       <p>국문장편을 여러 편 읽다 보면 작품이 달라도 비슷한 인물과 사건, 비슷한 결말을 기대하게 됩니다. 작품들이 함께 쓰는 그 세계를 근거 대목과 함께 살펴보세요.</p></div>
-      <div class="wi-cols">${SEC.map(([g,items],gi)=>`<div class="wi-col" style="--gc:${GC[gi]}"><div class="wi-gh"><b>${g||'세계의 요소'}</b><span>${SUB[gi]}</span></div>${items.map(([k,t,d])=>`<button class="wi-card" data-v="${k}"><b>${t}</b><span>${d}</span><em>들어가기 →</em></button>`).join('')}</div>`).join('')}</div></div>`;
+      <div class="wi-cols">${SEC.map(([g,items],gi)=>`<div class="wi-col" style="--gc:${GC[gi]}"><div class="wi-gh"><b>${g||'세계의 요소'}</b><span>${SUB[gi]}</span></div>${items.map(([k,t,d])=>`<button class="wi-card" data-v="${k}"><b>${t}</b><span>${d}</span><em>들어가기 →</em></button>`).join('')}</div>`).join('')}</div><div class="wi-more"><a href="w2/">여성영웅소설의 공유 세계 (시험)</a></div></div>`;
     box.querySelectorAll('.wi-card').forEach(b=>b.onclick=()=>{ location.hash='world-'+b.dataset.v; });
     if(!box.__wiObs){ box.__wiObs=new MutationObserver(()=>{ if(!introDone && document.body.classList.contains('mode-world') && !box.querySelector('.wi-wrap')) intro(box); }); box.__wiObs.observe(box,{childList:true}); }
   }

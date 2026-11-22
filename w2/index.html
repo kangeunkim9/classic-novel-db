@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+</head><body>
+<title>여성영웅소설 공유 세계</title>
+<style>
+:root{--blue:#01449E;--navy:#0A2A5E;--light:#B8D6F4;--tint:#EEF4FB;--orange:#FCAF17;--text:#1F2A33;--muted:#5F6B75;--line:#D6E0EC;--bg:#F6F8FB;
+--cP:#01449E;--cR:#B87800;--cL:#1E7B4F;--cO:#6B3FA0;--cA:#C2410C;--cT:#8A2A55;--cH:#7A8590}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:"NanumSquare_ac","NanumSquareOTF_ac","Nanum Gothic","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;color:var(--text);background:var(--bg);font-size:14px}
+header{background:var(--navy);color:#fff;padding:12px 22px;display:flex;align-items:center;gap:14px}
+header h1{font-size:18px;margin:0;font-weight:800;letter-spacing:-.3px}
+.badge{background:var(--orange);color:var(--navy);font-weight:800;font-size:11px;padding:3px 8px;border-radius:3px}
+header .stats{margin-left:auto;display:flex;gap:20px;font-size:11.5px;color:var(--light)}
+header .stats b{display:block;color:#fff;font-size:16px;font-weight:800}
+.wrap{display:grid;grid-template-columns:210px minmax(0,1fr) minmax(0,1fr);height:calc(100vh - 58px)}
+aside{background:#fff;border-right:1px solid var(--line);padding:14px;overflow:auto}
+aside h3{font-size:11px;color:var(--muted);margin:16px 0 8px;font-weight:800;letter-spacing:.5px}
+aside h3:first-child{margin-top:0}
+.chk{display:flex;align-items:center;gap:7px;padding:5px 6px;border-radius:4px;font-size:13px;cursor:pointer}
+.chk:hover{background:var(--tint)}
+.chk small{margin-left:auto;color:var(--muted);font-size:11px}
+.chk.off{color:#A5AEB7;cursor:default}
+.sublab{font-size:10.5px;color:var(--muted);margin:8px 6px 2px;font-weight:800}
+.orig{max-height:190px;overflow:auto;border:1px solid #EEF2F6;border-radius:4px;padding:2px}
+.orig .chk{padding:3px 6px;font-size:12px}
+.cat{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:4px;cursor:pointer;font-size:13px;margin-bottom:2px}
+.cat.on{background:var(--tint);color:var(--blue);font-weight:800}
+.cat i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.cat small{margin-left:auto;color:var(--muted);font-weight:400;font-size:11px}
+.layers label{display:flex;gap:6px;align-items:center;font-size:12.5px;padding:3px 6px;cursor:pointer}
+main{overflow:auto;padding:16px 18px;border-right:1px solid var(--line)}
+.search{display:flex;gap:8px;position:sticky;top:-16px;background:var(--bg);padding:16px 0 10px;margin-top:-16px;z-index:2}
+.search input{flex:1;font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:#fff}
+.search input:focus{outline:2px solid var(--light);border-color:var(--blue)}
+.search button{font:inherit;font-weight:800;background:var(--blue);color:#fff;border:0;border-radius:4px;padding:0 16px;cursor:pointer}
+.hint{font-size:12px;color:var(--muted);margin:2px 0 12px}
+.hint b{color:var(--text)}
+.card{background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin-bottom:12px}
+.k{font-size:11.5px;color:var(--muted);font-weight:800;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+.sum{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-end}
+.sum .big b{font-size:26px;color:var(--navy);font-weight:800;display:block;line-height:1.1}
+.sum .big small{font-size:11.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--tint);border:1px solid transparent;border-radius:12px;padding:3px 10px;font-size:12.5px;cursor:pointer}
+.chip b{color:var(--blue);margin-left:4px}
+.chip.on{border-color:var(--blue);background:#fff}
+.chip.R{background:#FFF4DA}
+.dist{display:flex;align-items:flex-end;gap:2px;height:46px;margin-top:6px}
+.dist div{flex:1;background:var(--light);min-height:1px;border-radius:2px 2px 0 0;cursor:pointer;position:relative}
+.dist div:hover{background:var(--blue)}
+.distl{display:flex;gap:2px;font-size:9.5px;color:var(--muted)}
+.distl span{flex:1;text-align:center}
+.wname{font-size:12px;font-weight:800;color:var(--navy);margin:10px 0 0}
+.kwic{font-size:13.5px;line-height:1.65}
+.kw{display:grid;grid-template-columns:88px 1fr;gap:10px;padding:7px 4px;border-bottom:1px solid #EEF2F6;cursor:pointer}
+.kw:hover{background:var(--tint)}
+.kw .loc{font-size:11.5px;color:var(--muted);line-height:1.35}
+.kw .loc b{display:block;color:var(--navy);font-size:12px}
+.kw .ctx em{font-style:normal;font-weight:800;background:#FFE8A8;border-radius:2px;padding:0 1px}
+.kw .ref{font-size:11px;color:var(--blue);margin-left:6px;white-space:nowrap}
+.more{font-size:12px;color:var(--muted);padding:8px 4px}
+.idx{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px 10px;font-size:13px}
+.idx div{display:flex;justify-content:space-between;padding:4px 6px;border-radius:3px;cursor:pointer}
+.idx div:hover{background:var(--tint)}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
+.toc div{border:1px solid var(--line);border-radius:4px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.toc div:hover{background:var(--tint)}
+.toc div.on{border-color:var(--blue);background:var(--tint)}
+.toc b{color:var(--navy);font-size:13.5px}
+.toc span{font-size:12px;color:var(--text);line-height:1.4}
+.toc small{font-size:11px;color:var(--muted)}
+.idx small{color:var(--muted)}
+section.reader{overflow:auto;background:#fff;padding:0}
+.rhead{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:12px 22px;z-index:2;display:flex;align-items:center;gap:10px}
+.rhead b{font-size:15px;color:var(--navy)}
+.rhead span{font-size:12px;color:var(--muted)}
+.rhead .nav{margin-left:auto;display:flex;gap:6px}
+.rhead button{font:inherit;font-size:12px;border:1px solid var(--line);background:#fff;border-radius:3px;padding:3px 9px;cursor:pointer}
+.rtext{padding:14px 26px 60px;font-size:15px;line-height:1.95}
+.rtext p{margin:0 0 12px;padding:4px 8px;border-radius:4px}
+.rtext p.hit{background:#FFF8E3;box-shadow:inset 3px 0 0 var(--orange)}
+.rtext .pn{font-size:10px;color:#A5AEB7;margin-right:6px;user-select:none}
+.rtext .sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.empty{color:var(--muted);padding:40px 26px;font-size:13.5px;line-height:1.8}
+x-t{cursor:help}
+.on-P x-t[t=P]{color:var(--cP);border-bottom:1.5px solid var(--cP)}
+.on-R x-t[t=R]{background:#FFF0C7;border-radius:2px}
+.on-L x-t[t=L]{color:var(--cL);border-bottom:1.5px dashed var(--cL)}
+.on-O x-t[t=O]{color:var(--cO);border-bottom:1.5px dotted var(--cO)}
+.on-A x-t[t=A]{background:#FDE3D3;border-radius:2px}
+.on-T x-t[t=T]{color:var(--cT);font-weight:700}
+.on-H x-t[t=H]{color:var(--cH);font-size:.86em}
+.on-S x-t[t=S]{background:linear-gradient(transparent 92%, #CFE0F5 92%)}
+x-t.q{outline:2px solid var(--orange);border-radius:2px}
+mark.q{background:#FFE08A;border-radius:2px;padding:0}
+#tip{position:fixed;z-index:9;background:var(--navy);color:#fff;font-size:12px;line-height:1.5;padding:7px 10px;border-radius:4px;max-width:300px;pointer-events:none;display:none}
+#tip b{color:var(--orange)}
+
+#landing{position:fixed;inset:0;z-index:20;background:var(--navy);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;padding:24px 16px;overflow:auto}
+#landing[hidden]{display:none}
+#landing .lt{text-align:center}
+#landing .lt h2{font-size:30px;font-weight:800;margin:0 0 10px;letter-spacing:-.5px}
+#landing .lt p{margin:0;font-size:14px;color:var(--light)}
+#landing .lb{display:grid;grid-template-columns:repeat(2,minmax(0,340px));gap:22px;width:100%;justify-content:center}
+#landing a{display:flex;flex-direction:column;justify-content:center;gap:10px;min-height:200px;padding:28px;border-radius:10px;background:#fff;color:var(--navy);text-decoration:none;box-shadow:0 6px 24px rgba(0,0,0,.18);transition:transform .15s,box-shadow .15s}
+#landing a:hover,#landing a:focus-visible{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.28);outline:3px solid var(--orange);outline-offset:2px}
+#landing a b{font-size:24px;font-weight:800;letter-spacing:-.4px}
+#landing a span{font-size:13.5px;color:var(--muted);line-height:1.5;word-break:keep-all}
+#landing a i{width:34px;height:4px;background:var(--orange);border-radius:2px}
+header h1{cursor:pointer}
+.wi-fold{display:flex;justify-content:center;padding:8px 0 4px}
+.wi-fold button{font:inherit;font-size:13px;font-weight:700;color:var(--blue);background:#fff;border:1px solid var(--line);border-radius:16px;padding:6px 16px;cursor:pointer}
+.wi-fold button:hover{border-color:var(--blue);background:var(--tint)}
+.wi-fold{position:sticky;bottom:12px;z-index:3}
+.wi-fold button{box-shadow:0 4px 14px rgba(10,42,94,.18)}
+.wi-wrap{max-width:1080px;margin:0 auto;padding:36px 8px 40px}
+body.wi-on .wrap{grid-template-columns:minmax(0,1fr)!important}
+body.wi-on section.reader{display:none}
+.wi-hero{text-align:center;margin:0 auto 34px;max-width:720px}
+.wi-hero .k2{display:inline-block;font-size:12px;font-weight:800;color:var(--blue);background:var(--tint);border-radius:12px;padding:3px 10px;margin-bottom:12px}
+.wi-hero h2{font-size:30px;font-weight:800;color:var(--navy);margin:0 0 14px;letter-spacing:-.6px}
+.wi-hero p{font-size:15px;line-height:1.8;color:var(--muted);margin:0;word-break:keep-all}
+.wi-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.wi-col{display:flex;flex-direction:column;gap:12px}
+.wi-gh{display:flex;align-items:baseline;gap:8px;padding:0 4px 8px;border-bottom:2px solid var(--gc);margin-bottom:2px}
+.wi-gh b{font-size:14px;font-weight:800;color:var(--gc)}
+.wi-gh span{font-size:12px;color:var(--muted)}
+.wi-card{all:unset;box-sizing:border-box;flex:1;display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px 22px;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s}
+.wi-card:hover,.wi-card:focus-visible{transform:translateY(-2px);border-color:var(--gc);box-shadow:0 8px 22px rgba(10,42,94,.10)}
+.wi-card:focus-visible{outline:2px solid var(--gc);outline-offset:2px}
+.wi-card b{font-size:18px;font-weight:800;color:var(--navy);letter-spacing:-.3px}
+.wi-card span{font-size:13.5px;line-height:1.7;color:var(--muted);word-break:keep-all}
+.wi-card em{font-style:normal;font-size:13px;font-weight:800;color:var(--gc);margin-top:auto;padding-top:6px}
+@media (max-width: 900px){.wi-cols{grid-template-columns:1fr}.wi-hero h2{font-size:24px}.wi-wrap{padding-top:20px}}
+.wi-back{font:inherit;font-size:12px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:3px 11px;cursor:pointer;color:var(--muted);margin-left:auto}
+.wi-back:hover{color:var(--blue);border-color:var(--blue)}
+#landing .lf{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-size:12.5px;color:var(--light);line-height:1.7;padding:0 16px;word-break:keep-all}
+#landing .lf b{color:#fff;font-weight:700}
+#landing .lf a{display:inline;min-height:0;padding:0;background:none;box-shadow:none;color:var(--light);text-decoration:underline;text-underline-offset:2px}
+#landing .lf a:hover{transform:none;box-shadow:none;outline:none;color:#fff}
+@media (max-height: 640px){#landing .lf{position:static}}
+@media (max-width: 700px){#landing .lb{grid-template-columns:1fr}#landing a{min-height:140px}#landing .lt h2{font-size:24px}}
+@media (max-width: 900px){
+  html,body{height:auto}
+  header{flex-wrap:wrap;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  header .stats{margin-left:0;flex-wrap:wrap;gap:12px}
+  .wrap{display:block;height:auto}
+  aside,main{border-right:0;border-bottom:1px solid var(--line)}
+  main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  section.reader{min-height:60vh}
+  .rtext{padding-left:16px;padding-right:16px}
+  .kw{grid-template-columns:1fr}
+}
+</style>
+
+<header>
+  <h1>여성영웅소설 공유 세계</h1><span class="badge">시험판</span>
+  <div class="stats" id="stats"></div>
+</header>
+<div class="wrap">
+  <aside>
+    <h3>현대어역본</h3>
+    <label class="chk" style="font-size:12px;color:var(--muted)"><input type="checkbox" id="multi">여러 작품 함께 보기</label>
+    <div id="works" class="orig" style="max-height:250px"></div>
+    <div id="orig" hidden></div><span id="origN" hidden></span>
+    <h3>검색 대상</h3>
+    <div id="cats"></div>
+    <h3>본문 표시</h3>
+    <div class="layers" id="layers"></div>
+  </aside>
+  <main>
+    <div class="mtabs" id="mtabs"></div>
+    <div class="search"><input id="q" placeholder="이름, 관직명, 장소, 고사, 한자 등을 입력하세요 (예: 한림, 북경, 삼종지도, 嫦娥)" autocomplete="off"><button id="go">검색</button></div>
+    <div class="hint" id="hint"></div>
+    <div id="res"></div>
+    <div id="info" hidden></div>
+  </main>
+  <section class="reader" id="reader"><div class="empty">왼쪽 검색 결과에서 용례를 누르면 여기에 해당 회·권의 본문이 열립니다.<br>본문에는 태깅된 이름·호칭·장소·가문·고사·서명·한자가 색으로 표시되고, 마우스를 올리면 가리키는 인물과 설명을 볼 수 있습니다.</div></section>
+</div>
+<div id="landing" hidden>
+  <div class="lt"><h2>여성영웅소설 공유 세계</h2><p>홍계월전 · 정수정전 · 이대봉전 · 김희경전 · 박씨전 (시험판)</p></div>
+  <div class="lb">
+    <a href="#world" data-m="world"><i></i><b>여성영웅소설의 공유 세계</b><span>다섯 편이 함께 쓰는 인물·모티프·규칙과 그 근거 대목</span></a>
+    <a href="#works" data-m="works"><i></i><b>작품 읽기</b><span>다섯 편의 현대어역 본문 읽기와 검색</span></a>
+  </div>
+  <div class="lf">기획·구축 <b>김강은</b> · 성균관대학교 국어국문학과 BK21 교육연구단<br>© 2026 <a href="https://kangeunkim9.github.io/" target="_blank" rel="noopener">kangeunkim9.github.io</a></div>
+</div>
+<div id="tip"></div>
+<script>
+const W = [{"id": "HGW", "title": "홍계월전", "unit": "회", "n": 8}, {"id": "JSJ", "title": "정수정전", "unit": "권", "n": 1}, {"id": "LDB", "title": "이대봉전", "unit": "권", "n": 2}, {"id": "KHK", "title": "김희경전", "unit": "회", "n": 2}, {"id": "PSJ", "title": "박씨전", "unit": "권", "n": 1}];
+// 원문 중 30권 넘는 작품은 당분간 숨김 (2026-11-10 요청). 다시 보이게 하려면 MAXORIG를 크게.
+const MAXORIG = 30;
+const HIDDEN_ORIG = [];
+for (let i = W.length - 1; i >= 0; i--) if (W[i].orig && W[i].n > MAXORIG) HIDDEN_ORIG.push(W.splice(i, 1)[0].title);
+const TN = {P:'이름', R:'호칭·관직·대명사', L:'장소', O:'가문·기관', A:'고사', T:'서명', H:'한자', S:'발화', D:'시간'};
+const CATS = [
+  {k:'X', n:'본문 전체', c:'#1F2A33'},
+  {k:'PR', n:'인물 (이름·호칭)', c:'var(--cP)'},
+  {k:'L', n:'장소', c:'var(--cL)'},
+  {k:'O', n:'가문·기관', c:'var(--cO)'},
+  {k:'A', n:'고사', c:'var(--cA)'},
+  {k:'T', n:'서명', c:'var(--cT)'},
+  {k:'H', n:'한자', c:'var(--cH)'},
+];
+const LAYERS = ['P','R','L','O','A','T','H','S'];
+const PLANNED = [];
+const ORIG = [];
+for (let i = ORIG.length - 1; i >= 0; i--) if (parseInt(ORIG[i][1]) > MAXORIG || HIDDEN_ORIG.includes(ORIG[i][0])) ORIG.splice(i, 1);
+W.forEach(w => { if (w.id === 'HGDO') { w.orig = true; w.title = '홍길동전'; } });
+let st = {works: new Set([W[0].id]), multi:false, cat:'X', q:'', ref:null, layers:new Set(LAYERS), cur:null};
+
+// 색인: 작품별 단위(회/권) 목록, 범주별 표면형 빈도
+function indexW(w){
+  w.units = [...new Set(w.paras.map(p => p.c))].sort((a,b)=>a-b);
+  w.byUnit = {}; w.paras.forEach((p,i) => { p.w = w; p.i = i; (w.byUnit[p.c] = w.byUnit[p.c] || []).push(i); });
+  w.idx = {};
+  w.paras.forEach(p => p.sp.forEach(([a,b,t,r]) => {
+    const s = p.t.slice(a,b).trim(); if (!s) return;
+    const key = (t==='P'||t==='R') ? 'PR' : t;
+    const m = (w.idx[key] = w.idx[key] || {}); m[s] = (m[s]||0) + 1;
+  }));
+}
+var W_EXTRA = {push(o){ const w = W.find(x => x.id === o.id); if (!w) return; const keep = {title:w.title, orig:w.orig, n:w.n}; Object.assign(w, o, keep); indexW(w); w.loaded = true; }};
+const loading = {};
+function ensure(ids){
+  return Promise.all(ids.map(id => loading[id] || (loading[id] = new Promise((ok, no) => {
+    const s = document.createElement('script'); s.src = 'data/' + id + '.js';
+    s.onload = ok; s.onerror = () => { delete loading[id]; no(id); };
+    document.head.appendChild(s);
+  }))));
+}
+const sel = () => W.filter(w => st.works.has(w.id) && w.loaded);
+let rtok = 0;
+async function refresh(after){
+  const tok = ++rtok;
+  const need = [...st.works].filter(id => !W.find(w => w.id === id).loaded);
+  if (need.length) {
+    const names = need.map(id => W.find(w => w.id === id).title).join(', ');
+    document.getElementById('res').innerHTML = `<div class="card"><div class="more">${names} 데이터를 불러오는 중입니다…</div></div>`;
+    try { await ensure(need); } catch (e) { if (tok === rtok) document.getElementById('res').innerHTML = '<div class="card"><div class="more">데이터를 불러오지 못했습니다. 페이지를 새로 고쳐 주세요.</div></div>'; return; }
+    if (tok !== rtok) return;
+  }
+  stats(); side(); run();
+  if (after) after();
+}
+const nf = n => n.toLocaleString();
+function stats(){
+  const ws = sel();
+  const sum = f => ws.reduce((a,w)=>a+f(w),0);
+  const cnt = t => sum(w => w.paras.reduce((a,p)=>a+p.sp.filter(s=>t.includes(s[2])).length,0));
+  document.getElementById('stats').innerHTML = [
+    [W.filter(w=>!w.orig).length + PLANNED.length,'작품'],
+    [nf(sum(w=>w.paras.length)),'문단'],
+    [nf(sum(w=>Object.keys(w.persons).length)),'인물'],
+    [nf(cnt('PR')),'인물 지칭'],
+    [nf(cnt('L')),'장소'],
+    [nf(cnt('A')),'고사'],
+    [nf(cnt('H')),'한자 병기'],
+  ].map(([b,s])=>`<div><b>${b}</b>${s}</div>`).join('');
+}
+function side(){
+  const typ = st.multi ? 'checkbox' : 'radio';
+  const item = w => `<label class="chk"><input type="${typ}" name="wsel" data-w="${w.id}" ${st.works.has(w.id)?'checked':''}>${w.title}<small>${w.n}${w.unit}</small></label>`;
+  const off = ([n,s]) => `<div class="chk off"><input type="${typ}" disabled>${n}<small>${s}</small></div>`;
+  const ow = W.filter(w => w.orig);
+  document.getElementById('works').innerHTML = W.filter(w => !w.orig).map(item).join('') + PLANNED.map(off).join('');
+  document.getElementById('orig').innerHTML = ow.map(item).join('') + ORIG.filter(([n]) => !ow.some(w => w.title === n)).map(off).join('');
+  document.getElementById('origN').textContent = (ORIG.length + ow.filter(w => !ORIG.some(([n]) => n === w.title)).length) + '종';
+  document.getElementById('multi').checked = st.multi;
+  document.getElementById('multi').onchange = e => { st.multi = e.target.checked; if (!st.multi) { const first = W.find(w => st.works.has(w.id)) || W[0]; st.works = new Set([first.id]); } side(); refresh(); };
+  document.querySelectorAll('aside input[data-w]').forEach(el => el.onchange = () => {
+    if (st.multi) { el.checked ? st.works.add(el.dataset.w) : st.works.delete(el.dataset.w); }
+    else { st.works = new Set([el.dataset.w]); document.querySelectorAll('aside input[data-w]').forEach(x => x.checked = x === el); }
+    st.ref = null; side();
+    const wid = el.dataset.w, single = !st.multi;
+    refresh(() => { if (single && !st.q) { const w = W.find(x => x.id === wid); openUnit(w, w.units[0]); } });
+  });
+  const tot = k => sel().reduce((a,w)=>a+Object.values(w.idx[k]||{}).reduce((x,y)=>x+y,0),0);
+  document.getElementById('cats').innerHTML = CATS.map(c => `<div class="cat ${st.cat===c.k?'on':''}" data-k="${c.k}"><i style="background:${c.c}"></i>${c.n}${c.k!=='X'?`<small>${nf(tot(c.k))}</small>`:''}</div>`).join('');
+  document.querySelectorAll('.cat').forEach(el => el.onclick = () => { st.cat = el.dataset.k; st.ref = null; side(); run(); });
+  document.getElementById('layers').innerHTML = LAYERS.map(t => `<label><input type="checkbox" data-l="${t}" ${st.layers.has(t)?'checked':''}>${TN[t]}</label>`).join('');
+  document.querySelectorAll('#layers input').forEach(el => el.onchange = () => { el.checked ? st.layers.add(el.dataset.l) : st.layers.delete(el.dataset.l); applyLayers(); });
+}
+function applyLayers(){ const r = document.getElementById('reader'); LAYERS.forEach(t => r.classList.toggle('on-'+t, st.layers.has(t))); }
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function pname(w, id){ const p = w.persons[id]; return p ? p.name : id; }
+
+// 검색: 결과는 {p(문단), a, b, t(태그 종류 또는 null), r(참조)}
+function search(){
+  const q = st.q, hits = [];
+  const ws = sel();
+  if (!q) return hits;
+  ws.forEach(w => w.paras.forEach(p => {
+    if (st.cat === 'X') {
+      let i = p.t.indexOf(q);
+      while (i >= 0) {
+        const tag = p.sp.find(s => s[0] <= i && s[1] >= i + q.length && s[2] !== 'S' && s[2] !== 'N');
+        hits.push({p, a:i, b:i+q.length, t: tag ? tag[2] : null, r: tag ? tag[3] : ''});
+        i = p.t.indexOf(q, i + q.length);
+      }
+    } else {
+      p.sp.forEach(([a,b,t,r]) => {
+        if (!st.cat.includes(t)) return;
+        const s = p.t.slice(a,b);
+        const byRef = st.cat==='PR' && r.split(' ').some(id => { const pp = w.persons[id]; return pp && (pp.name === q); });
+        if (s.includes(q) || byRef) hits.push({p, a, b, t, r, byRef: byRef && !s.includes(q)});
+      });
+    }
+  }));
+  return hits;
+}
+function run(){
+  const res = document.getElementById('res'), hint = document.getElementById('hint');
+  const ws = sel();
+  if (!st.q) {
+    const cat = CATS.find(c=>c.k===st.cat);
+    if (st.cat === 'X') {
+      hint.innerHTML = '회·권을 누르면 오른쪽에 본문이 열립니다. 검색어를 입력하면 선택한 작품의 본문 전체에서 찾고, 왼쪽 <b>검색 대상</b>을 바꾸면 이름·장소·고사 등만 골라 찾을 수 있습니다.';
+      res.innerHTML = ws.map(w => `<div class="card"><div class="k">${w.title} · 전 ${w.units.length}${w.unit} · ${nf(w.paras.length)}문단</div><div class="toc">${w.units.map(u => { const ps = w.byUnit[u]; const sub = w.paras[ps[0]].sub; const nP = ps.reduce((a,i)=>a+w.paras[i].sp.filter(s=>s[2]==='P'||s[2]==='R').length,0); return `<div data-w="${w.id}" data-u="${u}" class="${st.cur&&st.cur.w===w&&st.cur.c===u?'on':''}"><b>${u}${w.unit}</b><span>${sub?esc(sub):''}</span><small>${ps.length}문단 · 인물 지칭 ${nf(nP)}</small></div>`; }).join('')}</div></div>`).join('');
+      res.querySelectorAll('.toc div').forEach(el => el.onclick = () => { const w = W.find(x=>x.id===el.dataset.w); openUnit(w, +el.dataset.u); res.querySelectorAll('.toc div').forEach(x=>x.classList.toggle('on', x===el)); });
+      return;
+    }
+    hint.innerHTML = `<b>${cat.n}</b> 목록입니다. 항목을 누르면 용례를 찾습니다.`;
+    res.innerHTML = ws.map(w => {
+      const m = Object.entries(w.idx[st.cat]||{}).sort((a,b)=>b[1]-a[1]).slice(0,150);
+      return `<div class="card"><div class="k">${w.title} · ${cat.n} 상위 ${m.length}개</div><div class="idx">${m.map(([s,n])=>`<div data-s="${esc(s)}">${esc(s)}<small>${n}</small></div>`).join('') || '<span class="more">태깅된 항목이 없습니다.</span>'}</div></div>`;
+    }).join('');
+    res.querySelectorAll('.idx div').forEach(el => el.onclick = () => { document.getElementById('q').value = el.dataset.s; st.q = el.dataset.s; st.ref = null; run(); });
+    return;
+  }
+  let hits = search();
+  const all = hits;
+  // 참조 대상(인물·장소)별 묶음
+  const refc = {};
+  all.forEach(h => (h.r||'').split(' ').filter(Boolean).forEach(id => { if (h.t==='S') return; const key = h.p.w.id + '|' + id; refc[key] = (refc[key]||0)+1; }));
+  if (st.ref) hits = hits.filter(h => (h.p.w.id + '|' ) && (h.r||'').split(' ').some(id => h.p.w.id + '|' + id === st.ref));
+  const tc = {}; all.forEach(h => { const k = h.t || '_'; tc[k] = (tc[k]||0)+1; });
+  const cat = CATS.find(c=>c.k===st.cat);
+  hint.innerHTML = `<b>‘${esc(st.q)}’</b> · ${cat.n} 검색` + (st.cat==='PR' ? ' · 인물 이름을 정확히 입력하면 그 인물을 가리킨 모든 지칭(호칭 포함)도 함께 찾습니다.' : '');
+  let html = `<div class="card"><div class="sum">
+    <div class="big"><b>${nf(all.length)}</b><small>전체 용례</small></div>
+    ${ws.map(w=>`<div class="big"><b style="font-size:19px">${nf(all.filter(h=>h.p.w===w).length)}</b><small>${w.title}</small></div>`).join('')}
+    </div>`;
+  if (st.cat === 'X') html += `<div class="k" style="margin-top:12px">태그별</div><div class="chips">${Object.entries(tc).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`<span class="chip">${k==='_'?'태그 없음':TN[k]}<b>${nf(n)}</b></span>`).join('')}</div>`;
+  const refs = Object.entries(refc).sort((a,b)=>b[1]-a[1]).slice(0,14);
+  if (refs.length) html += `<div class="k" style="margin-top:12px">가리키는 대상 <span style="font-weight:400">눌러서 걸러 보기</span></div><div class="chips">${refs.map(([k,n])=>{ const [wid,id]=k.split('|'); const w=W.find(x=>x.id===wid); const nm = w.persons[id] ? w.persons[id].name : (w.places && w.places[id] ? w.places[id].name : id); return `<span class="chip ${st.ref===k?'on':''}" data-ref="${k}">${esc(nm)}${ws.length>1?` <small style="color:var(--muted)">${w.title.slice(0,2)}</small>`:''}<b>${nf(n)}</b></span>`; }).join('')}</div>`;
+  ws.forEach(w => {
+    const ch = w.units.map(u => hits.filter(h => h.p.w===w && h.p.c===u).length), mx = Math.max(1,...ch);
+    if (!ch.some(Boolean)) return;
+    html += `<div class="wname">${w.title} · ${w.unit}별 분포</div><div class="dist">${ch.map((n,i)=>`<div title="${w.units[i]}${w.unit} ${n}건" data-w="${w.id}" data-u="${w.units[i]}" style="height:${Math.round(n/mx*100)}%"></div>`).join('')}</div><div class="distl">${w.units.map(u=>`<span>${u}</span>`).join('')}</div>`;
+  });
+  html += `</div><div class="card kwic"><div class="k">용례 ${nf(hits.length)}건${hits.length>300?' · 앞 300건 표시':''}</div>`;
+  html += hits.slice(0,300).map((h,j) => {
+    const t = h.p.t, L = Math.max(0,h.a-34), R = Math.min(t.length,h.b+34);
+    const refs = (h.r||'').split(' ').filter(Boolean).map(id => (h.t==='L'||h.t==='O') ? (h.p.w.places[id]||{name:id}).name : pname(h.p.w,id));
+    return `<div class="kw" data-j="${j}"><div class="loc"><b>${h.p.w.title}</b>${h.p.c}${h.p.w.unit} · ${h.p.i - h.p.w.byUnit[h.p.c][0] + 1}문단</div><div class="ctx">${L>0?'…':''}${esc(t.slice(L,h.a))}<em>${esc(t.slice(h.a,h.b))}</em>${esc(t.slice(h.b,R))}${R<t.length?'…':''}${h.t?`<span class="ref">${TN[h.t]}${refs.length&&h.t!=='S'?' → '+esc(refs.join(', ')):''}</span>`:''}</div></div>`;
+  }).join('') || '<div class="more">찾은 용례가 없습니다.</div>';
+  html += '</div>';
+  res.innerHTML = html;
+  res.querySelectorAll('.chip[data-ref]').forEach(el => el.onclick = () => { st.ref = st.ref === el.dataset.ref ? null : el.dataset.ref; run(); });
+  res.querySelectorAll('.kw').forEach(el => el.onclick = () => { const h = hits[+el.dataset.j]; openUnit(h.p.w, h.p.c, h.p.i, h); });
+  res.querySelectorAll('.dist div').forEach(el => el.onclick = () => { const w = W.find(x=>x.id===el.dataset.w); const u = +el.dataset.u; const h = hits.find(x=>x.p.w===w && x.p.c===u); if (h) openUnit(w,u,h.p.i,h); });
+}
+function renderPara(p, h){
+  const t = p.t, sp = p.sp.filter(s => s[2] !== 'N' && s[2] !== 'D');
+  // 경계 지점으로 잘라 중첩 태그를 감싼다
+  const cuts = new Set([0, t.length]); sp.forEach(s => { cuts.add(s[0]); cuts.add(s[1]); });
+  if (h && !h.t) { cuts.add(h.a); cuts.add(h.b); }
+  const pts = [...cuts].sort((a,b)=>a-b);
+  let out = '';
+  for (let k = 0; k < pts.length - 1; k++) {
+    const a = pts[k], b = pts[k+1];
+    let s = esc(t.slice(a,b));
+    if (h && !h.t && a >= h.a && b <= h.b) s = `<mark class="q">${s}</mark>`;
+    const cover = sp.filter(x => x[0] <= a && x[1] >= b).sort((x,y)=>(x[1]-x[0])-(y[1]-y[0]));
+    cover.forEach(x => { const isq = h && h.t && x[0]===h.a && x[1]===h.b && x[2]===h.t; s = `<x-t t="${x[2]}" r="${esc(x[3])}"${(x[2]==='A'||x[2]==='T')?` s="${esc(t.slice(x[0],x[1]))}"`:''}${isq?' class="q"':''}>${s}</x-t>`; });
+    out += s;
+  }
+  return out.replace(/\n/g,'<br>');
+}
+function openUnit(w, c, pi, h){
+  st.cur = {w, c};
+  const idxs = w.byUnit[c];
+  const sub = w.paras[idxs[0]].sub;
+  const r = document.getElementById('reader');
+  const ui = w.units.indexOf(c);
+  r.innerHTML = `<div class="rhead"><b>${w.title}</b><span>${c}${w.unit} · ${idxs.length}문단</span><div class="nav"><button id="pv" ${ui<=0?'disabled':''}>‹ 이전 ${w.unit}</button><button id="nx" ${ui>=w.units.length-1?'disabled':''}>다음 ${w.unit} ›</button></div></div>
+    <div class="rtext">${sub?`<div class="sub">${esc(sub)}</div>`:''}${idxs.map((i,k) => `<p id="p${i}" class="${i===pi?'hit':''}"><span class="pn">${k+1}</span>${renderPara(w.paras[i], i===pi?h:null)}</p>`).join('')}</div>`;
+  applyLayers();
+  document.getElementById('pv').onclick = () => openUnit(w, w.units[ui-1]);
+  document.getElementById('nx').onclick = () => openUnit(w, w.units[ui+1]);
+  const el = document.getElementById('p'+pi);
+  if (el) el.scrollIntoView({block:'center'}); else r.scrollTop = 0;
+  r.onmousemove = ev => { const x = ev.target.closest('x-t'); if (!x) { document.getElementById('tip').style.display='none'; return; } tip(ev, w, x); };
+  r.onmouseleave = () => document.getElementById('tip').style.display='none';
+}
+function tipOne(w, x){
+  const t = x.getAttribute('t'), r = x.getAttribute('r');
+  if (!st.layers.has(t)) return '';
+  let body = `<b>${TN[t]}</b>`;
+  const ids = r.split(' ').filter(Boolean);
+  if (t==='P'||t==='R'||t==='S') body += (t==='S'?' · 말한 사람: ':' → ') + ids.map(id => { const p = w.persons[id]; return p ? `${esc(p.name)}${p.note?`<br><span style="color:var(--light)">${esc(p.note)}</span>`:''}` : esc(id); }).join('<br>');
+  else if (t==='L'||t==='O') body += ids.length ? ' · ' + ids.map(id => { const p = (w.places||{})[id]; return p ? `${esc(p.name)}${p.note?` <span style="color:var(--light)">${esc(p.note)}</span>`:''}` : esc(id); }).join(', ') : '';
+  else if (t==='A'||t==='T') body += ' · ' + esc(x.getAttribute('s') || x.textContent);
+  return body;
+}
+function tip(ev, w, x){
+  const parts = []; let el = x;
+  while (el && el.tagName === 'X-T') { const s = tipOne(w, el); if (s) parts.push(s); el = el.parentElement.closest('x-t'); }
+  const tp = document.getElementById('tip');
+  if (!parts.length) { tp.style.display = 'none'; return; }
+  tp.innerHTML = parts.join('<hr style="border:0;border-top:1px solid rgba(255,255,255,.2);margin:5px 0">'); tp.style.display = 'block';
+  const rc = x.getBoundingClientRect(); tp.style.left = Math.min(rc.left, innerWidth - 310) + 'px'; tp.style.top = (rc.bottom + 6) + 'px';
+}
+const go = () => { st.q = document.getElementById('q').value.trim(); st.ref = null; run(); };
+document.getElementById('go').onclick = go;
+document.getElementById('q').onkeydown = e => { if (e.key === 'Enter') go(); };
+const init = new URLSearchParams(location.search);
+side();
+refresh(() => { if (init.get('q')) { st.cat = init.get('cat') || 'X'; side(); document.getElementById('q').value = init.get('q'); go(); } });
+</script>
+<script src="info.js"></script>
+<script src="world.js"></script>
+<script>
+/* 세계의 법칙: 펼친 근거에 '접기' 버튼 (world.js는 그대로 두고 덧붙임) */
+(function(){
+  function fold(law){ const top=law.querySelector('.top'); const id=law.dataset.l; if(top) top.click();
+    setTimeout(()=>{ const d=document.querySelector('.law[data-l="'+id+'"]'); if(d) d.scrollIntoView({block:'nearest'}); },30); }
+  function add(){ document.querySelectorAll('.law').forEach(law=>{ const c=law.querySelector(':scope > .cases'); if(!c||law.querySelector('.wi-fold')) return;
+    const mk=(cls)=>{const w=document.createElement('div');w.className='wi-fold'+cls;const b=document.createElement('button');b.type='button';b.textContent='근거 접기 ▲';b.onclick=e=>{e.stopPropagation();fold(law);};w.appendChild(b);return w;};
+    c.after(mk('')); }); }
+  let t=null; new MutationObserver(()=>{ if(t) return; t=setTimeout(()=>{t=null;add();},50); }).observe(document.getElementById('res').parentNode,{childList:true,subtree:true});
+})();
+</script>
+<script>
+/* 상단 메뉴 이름 (info.js가 다시 그려도 유지) */
+(function(){
+  const NAME={world:'여성영웅소설의 공유 세계',works:'작품 읽기'};
+  const nav=document.querySelector('header nav.topnav'); if(!nav) return;
+  const fix=()=>nav.querySelectorAll('button[data-m]').forEach(b=>{const t=NAME[b.dataset.m]; if(t&&b.textContent!==t) b.textContent=t;});
+  fix(); new MutationObserver(fix).observe(nav,{childList:true,subtree:true,characterData:true});
+})();
+/* 세계관 첫 안내 화면: world.js는 건드리지 않고 drawWorld를 감싼다 */
+(function(){
+  const orig=window.drawWorld; if(!orig) return;
+  let introDone=false;
+  const SEC=[
+    ['세계의 요소', [['enc','세계의 요소','되풀이되는 인물 유형, 사물·모티프, 제도·의례, 공간을 항목별로 모았습니다. 항목마다 어느 작품 어느 대목에 나오는지 바로 확인할 수 있습니다.']]],
+    ['세계의 규칙', [['laws','세계의 법칙','그 세계가 어떻게 돌아가는지를 법칙으로 정리했습니다. 법칙마다 작품별 근거 사례를 달았고, 사례를 누르면 해당 본문이 열립니다.'],
+                    ['fate','응보의 질서','악인이 가문 안에서 어떤 자리에 있었고 어떤 결말을 맞는지(개과·용서·유배·처형 등)를 표로 비교합니다. 규칙에서 벗어나는 예외도 따로 모았습니다.']]],
+    ['주변 정보', [['hist','역사 연표','작품의 시대 배경을 실제 역사 연표 위에 놓고, 작품이 실제 역사와 맞닿는 지점과 어긋나는 지점을 보여 줍니다.'],
+                  ['allu','고사·경전','작품들이 함께 기대는 고사와 경전 구절을 출전과 함께 모았습니다.']]]
+  ];
+  function intro(box){
+    document.body.classList.add('wi-on');
+    const GC=['var(--blue)','var(--cL)','var(--cA)'];
+    const SUB=['무엇이 있나','어떻게 돌아가나','함께 기대는 바탕 지식'];
+    box.innerHTML=`<div class="wi-wrap"><div class="wi-hero"><span class="k2">시험 · 여성영웅소설 5편</span><h2>여성영웅소설의 공유 세계</h2>
+      <p>남장을 하고 집을 떠나 공을 세우는 여성 영웅의 이야기는 작품이 달라도 비슷한 길을 갑니다. 다섯 편이 함께 쓰는 세계를 근거 대목과 함께 살펴보세요. 본문은 위키문헌 원문을 Claude가 현대어로 옮긴 1차 번역입니다.</p></div>
+      <div class="wi-cols">${SEC.map(([g,items],gi)=>`<div class="wi-col" style="--gc:${GC[gi]}"><div class="wi-gh"><b>${g||'세계의 요소'}</b><span>${SUB[gi]}</span></div>${items.map(([k,t,d])=>`<button class="wi-card" data-v="${k}"><b>${t}</b><span>${d}</span><em>들어가기 →</em></button>`).join('')}</div>`).join('')}</div></div>`;
+    box.querySelectorAll('.wi-card').forEach(b=>b.onclick=()=>{ location.hash='world-'+b.dataset.v; });
+    if(!box.__wiObs){ box.__wiObs=new MutationObserver(()=>{ if(!introDone && document.body.classList.contains('mode-world') && !box.querySelector('.wi-wrap')) intro(box); }); box.__wiObs.observe(box,{childList:true}); }
+  }
+  let lastBox=null, pendingV=(location.hash.match(/^#world-(\w+)$/)||[])[1]||null;
+  function go(box,v){
+    introDone=true; document.body.classList.remove('wi-on'); orig(box);
+    let n=0; const t=setInterval(()=>{const b=box.querySelector('.wv-sub button[data-v="'+v+'"]'); if(b){clearInterval(t); if(!b.classList.contains('on')) b.click();} else if(++n>150) clearInterval(t);},100);
+  }
+  window.drawWorld=function(box){
+    lastBox=box;
+    if(pendingV){ const v=pendingV; pendingV=null; go(box,v); addBack(box); return; }
+    if(!introDone){ intro(box); return; }
+    document.body.classList.remove('wi-on');
+    orig(box);
+    addBack(box);
+  };
+  function addBack(box){
+    const add=()=>{const h=box.querySelector('.wv-head'); if(h&&!h.querySelector('.wi-back')){const b=document.createElement('button');b.className='wi-back';b.textContent='← 처음 안내';b.onclick=()=>{ location.hash='world'; };h.appendChild(b);return true;}return !!(h&&h.querySelector('.wi-back'));};
+    if(!add()){let n=0;const t=setInterval(()=>{if(add()||++n>150)clearInterval(t);},100);}
+  }
+  /* 뒤로 가기: #world = 안내, #world-갈래 = 그 화면 */
+  window.addEventListener('hashchange',()=>{
+    const h=location.hash, m=h.match(/^#world-(\w+)$/);
+    if(m){ if(lastBox&&document.body.classList.contains('mode-world')){ go(lastBox,m[1]); addBack(lastBox); } else pendingV=m[1]; }
+    else if(h==='#world'){ introDone=false; if(lastBox&&document.body.classList.contains('mode-world')) intro(lastBox); }
+  });
+  new MutationObserver(()=>{ if(!document.body.classList.contains('mode-world')){ introDone=false; if(document.body.classList.contains('wi-on')) document.body.classList.remove('wi-on'); } }).observe(document.body,{attributes:true,attributeFilter:['class']});
+  if(window.__gd&&window.__gd.isWorld&&window.__gd.isWorld()&&window.__gd.renderInfo) window.__gd.renderInfo();
+})();
+</script>
+<script>
+(function(){
+  const L=document.getElementById('landing');
+  const show=()=>{L.hidden=false;document.body.style.overflow='hidden';};
+  const hide=()=>{L.hidden=true;document.body.style.overflow='';};
+  if(!location.hash) show();
+  L.querySelectorAll('.lb a').forEach(a=>a.addEventListener('click',e=>{
+    const m=a.dataset.m; hide();
+    if(location.hash==='#'+m){e.preventDefault();}
+    if(window.__gd&&window.__gd.setMode){e.preventDefault();window.__gd.setMode(m);}
+  }));
+  window.addEventListener('hashchange',()=>{ if(location.hash && location.hash!=='#') hide(); else show(); });
+  document.querySelector('header h1').addEventListener('click',()=>{ if(location.hash && location.hash!=='#'){ try{history.pushState(null,'',location.pathname+location.search);}catch(e){} } show(); });
+})();
+</script>
+</body></html>
